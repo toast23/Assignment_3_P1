@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
     //Get the input file from the user
     if(argc != 2) {
         std::cout << "ERROR!\nExpected 1 argument, received " << argc - 1 << std::endl;
-        std::cout << "To run the program, do: ./interrutps <your_input_file.txt>" << std::endl;
+        std::cout << "To run the program, do: ./interrupts <your_input_file.txt>" << std::endl;
         return -1;
     }
 

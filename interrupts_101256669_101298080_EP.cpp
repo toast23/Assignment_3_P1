@@ -50,7 +50,7 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
         //Population of ready queue is given to you as an example.
         //Go through the list of proceeses
         for(auto &process : list_processes) {
-            if(process.arrival_time == current_time) {//check if the AT = current time
+            if(process.arrival_time == current_time) { //check if the AT = current time
                 //if so, assign memory and put the process into the ready queue
                 assign_memory(process);
 
@@ -64,11 +64,29 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
 
         ///////////////////////MANAGE WAIT QUEUE/////////////////////////
         //This mainly involves keeping track of how long a process must remain in the ready queue
+        for (int i = wait_queue.size() - 1; i >= 0; i--) { // backwards iteration to prevent index issues when erasing
+            wait_queue[i].remaining_time--;
 
+            if (wait_queue[i].remaining_time == 0) { //check if I/O is done
+                // if so, update state and move to ready queue
+                states old_state = WAITING;
+                wait_queue[i].state = READY;
+                ready_queue.push_back(wait_queue[i]);
+
+                // update job list and execution status
+                sync_queue(job_list, wait_queue[i]);
+                execution_status += print_exec_status(current_time, wait_queue[i].PID, old_state, READY);
+
+                // remove from wait queue
+                wait_queue.erase(wait_queue.begin() + i);
+            }
+        }
         /////////////////////////////////////////////////////////////////
 
         //////////////////////////SCHEDULER//////////////////////////////
         FCFS(ready_queue); //example of FCFS is shown here
+  
+
         /////////////////////////////////////////////////////////////////
 
     }
@@ -85,7 +103,7 @@ int main(int argc, char** argv) {
     //Get the input file from the user
     if(argc != 2) {
         std::cout << "ERROR!\nExpected 1 argument, received " << argc - 1 << std::endl;
-        std::cout << "To run the program, do: ./interrutps <your_input_file.txt>" << std::endl;
+        std::cout << "To run the program, do: ./interrupts <your_input_file.txt>" << std::endl;
         return -1;
     }
 

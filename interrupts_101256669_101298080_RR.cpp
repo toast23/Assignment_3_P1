@@ -64,11 +64,12 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
 
         ///////////////////////MANAGE WAIT QUEUE/////////////////////////
         //This mainly involves keeping track of how long a process must remain in the ready queue
-
+      
         /////////////////////////////////////////////////////////////////
 
         //////////////////////////SCHEDULER//////////////////////////////
-        FCFS(ready_queue); //example of FCFS is shown here
+        //FCFS(ready_queue); //example of FCFS is shown here
+        
         /////////////////////////////////////////////////////////////////
 
     }
@@ -85,7 +86,7 @@ int main(int argc, char** argv) {
     //Get the input file from the user
     if(argc != 2) {
         std::cout << "ERROR!\nExpected 1 argument, received " << argc - 1 << std::endl;
-        std::cout << "To run the program, do: ./interrutps <your_input_file.txt>" << std::endl;
+        std::cout << "To run the program, do: ./interrupts <your_input_file.txt>" << std::endl;
         return -1;
     }
 
