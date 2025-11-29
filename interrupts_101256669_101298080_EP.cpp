@@ -10,12 +10,12 @@
 
 void FCFS(std::vector<PCB> &ready_queue) { // Not used in this algorithm
     std::sort( 
-                ready_queue.begin(),
-                ready_queue.end(),
-                []( const PCB &first, const PCB &second ){
-                    return (first.arrival_time > second.arrival_time); 
-                } 
-            );
+        ready_queue.begin(),
+        ready_queue.end(),
+        []( const PCB &first, const PCB &second ){
+            return (first.arrival_time > second.arrival_time); 
+        } 
+    );
 }
 
 std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std::vector<PCB> list_processes) {
@@ -136,12 +136,10 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
             else if(running.remaining_time == 0) {
                 // update the running process
                 states old_state = RUNNING;
-                running.state = TERMINATED;
                 
-                // update job list and execution status and free memory
-                sync_queue(job_list, running);
+                // update execution status and terminate process (free memory, sync job list, update state)
                 execution_status += print_exec_status(current_time + 1, running.PID, old_state, TERMINATED); 
-                free_memory(running);
+                terminate_process(running, job_list);
 
                 idle_CPU(running); // Set CPU to idle
             }
