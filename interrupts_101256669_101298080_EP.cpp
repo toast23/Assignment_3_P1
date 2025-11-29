@@ -8,7 +8,7 @@
 
 #include "interrupts_101256669_101298080.hpp"
 
-void FCFS(std::vector<PCB> &ready_queue) {
+void FCFS(std::vector<PCB> &ready_queue) { // Not used in this algorithm
     std::sort( 
                 ready_queue.begin(),
                 ready_queue.end(),
@@ -64,19 +64,19 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
 
         ///////////////////////MANAGE WAIT QUEUE/////////////////////////
         //This mainly involves keeping track of how long a process must remain in the ready queue
-        for (int i = wait_queue.size() - 1; i >= 0; i--) { // backwards iteration to prevent index issues when erasing
-            wait_queue[i].remaining_time--;
+        for(int i = wait_queue.size() - 1; i >= 0; i--) { // Backwards iteration to allow erasing without index errors
+            wait_queue[i].io_duration_remaining--; // Decrement remaining I/O duration
 
-            if (wait_queue[i].remaining_time == 0) { //check if I/O is done
+            if(wait_queue[i].io_duration_remaining == 0) { // Check if I/O is done
                 // if so, update state and move to ready queue
                 states old_state = WAITING;
                 wait_queue[i].state = READY;
                 ready_queue.push_back(wait_queue[i]);
-
+                
                 // update job list and execution status
                 sync_queue(job_list, wait_queue[i]);
                 execution_status += print_exec_status(current_time, wait_queue[i].PID, old_state, READY);
-
+                
                 // remove from wait queue
                 wait_queue.erase(wait_queue.begin() + i);
             }
@@ -84,11 +84,71 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
         /////////////////////////////////////////////////////////////////
 
         //////////////////////////SCHEDULER//////////////////////////////
-        FCFS(ready_queue); //example of FCFS is shown here
-  
+        if(running.state != RUNNING && !ready_queue.empty()) { //Schedule only if CPU is free and there are processes in the ready queue
+            // Find the index of the process with the smallest PID
+            int smallest_PID_index = 0;
+            for (int i = 1; i < ready_queue.size(); i++) {
+                if (ready_queue[i].PID < ready_queue[smallest_PID_index].PID) {
+                    smallest_PID_index = i;
+                }
+            }
 
+            // Get a copy of the process and remove it from the ready queue
+            PCB next = ready_queue[smallest_PID_index];
+            ready_queue.erase(ready_queue.begin() + smallest_PID_index);
+
+            // Update the running process
+            states old_state = next.state;
+            next.state = RUNNING;
+            running = next;
+
+            // update job list and execution status
+            sync_queue(job_list, running);
+            execution_status += print_exec_status(current_time, running.PID, old_state, RUNNING);
+        }
         /////////////////////////////////////////////////////////////////
 
+        //////////////////////////RUNNING////////////////////////////////
+        if(running.state == RUNNING) {
+            running.remaining_time--; // Decrement remaining time
+
+            // Check for I/O 
+            if(running.io_freq > 0 && // 1. I/O frequency set
+                running.remaining_time != running.processing_time && // 2. Not first tick
+                (running.processing_time - running.remaining_time) % running.io_freq == 0 && // 3. I/O frequency reached
+                running.remaining_time > 0) { // 4. Process still running
+
+                // Update the running process
+                states old_state = RUNNING;
+                running.state = WAITING;
+                
+                // add process to wait queue
+                running.io_duration_remaining = running.io_duration + 1; // +1 because we decrement at the start of the wait queue managemen
+                wait_queue.push_back(running);
+                
+                // update job list and execution status
+                sync_queue(job_list, running);
+                execution_status += print_exec_status(current_time + 1, running.PID, old_state, WAITING);
+                
+                idle_CPU(running); // Set CPU to idle
+            }
+            // Process finishes execution
+            else if(running.remaining_time == 0) {
+                // update the running process
+                states old_state = RUNNING;
+                running.state = TERMINATED;
+                
+                // update job list and execution status and free memory
+                sync_queue(job_list, running);
+                execution_status += print_exec_status(current_time + 1, running.PID, old_state, TERMINATED); 
+                free_memory(running);
+
+                idle_CPU(running); // Set CPU to idle
+            }
+        }
+        /////////////////////////////////////////////////////////////////
+
+        current_time++; // update time
     }
     
     //Close the output table
