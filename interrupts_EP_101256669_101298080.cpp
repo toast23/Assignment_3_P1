@@ -1,5 +1,5 @@
 /**
- * @file interrupts_101256669_101298080_EP.cpp
+ * @file interrupts_EP_101256669_101298080.cpp
  * @author Sasisekhar Govind
  * @author Wenxuan Han 101256669
  * @author Tony Yao 101298080
