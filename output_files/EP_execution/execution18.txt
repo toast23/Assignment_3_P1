@@ -1,0 +1,53 @@
++------------------------------------------------+
+|Time of Transition |PID | Old State | New State |
++------------------------------------------------+
+|                 0 | 10 |       NEW |     READY |
+|                 0 | 20 |       NEW |     READY |
+|                 0 | 10 |     READY |   RUNNING |
+|                20 | 10 |   RUNNING |   WAITING |
+|                20 | 20 |     READY |   RUNNING |
+|                30 | 10 |   WAITING |     READY |
+|                50 | 30 |       NEW |     READY |
+|               100 | 40 |       NEW |     READY |
+|               320 | 20 |   RUNNING |TERMINATED |
+|               320 | 10 |     READY |   RUNNING |
+|               340 | 10 |   RUNNING |   WAITING |
+|               340 | 30 |     READY |   RUNNING |
+|               350 | 10 |   WAITING |     READY |
+|               390 | 30 |   RUNNING |   WAITING |
+|               390 | 10 |     READY |   RUNNING |
+|               410 | 10 |   RUNNING |   WAITING |
+|               410 | 30 |   WAITING |     READY |
+|               410 | 30 |     READY |   RUNNING |
+|               420 | 10 |   WAITING |     READY |
+|               460 | 30 |   RUNNING |TERMINATED |
+|               460 | 10 |     READY |   RUNNING |
+|               480 | 10 |   RUNNING |   WAITING |
+|               480 | 40 |     READY |   RUNNING |
+|               490 | 10 |   WAITING |     READY |
+|               530 | 40 |   RUNNING |TERMINATED |
+|               530 | 10 |     READY |   RUNNING |
+|               550 | 10 |   RUNNING |   WAITING |
+|               560 | 10 |   WAITING |     READY |
+|               560 | 10 |     READY |   RUNNING |
+|               580 | 10 |   RUNNING |   WAITING |
+|               590 | 10 |   WAITING |     READY |
+|               590 | 10 |     READY |   RUNNING |
+|               610 | 10 |   RUNNING |   WAITING |
+|               620 | 10 |   WAITING |     READY |
+|               620 | 10 |     READY |   RUNNING |
+|               640 | 10 |   RUNNING |   WAITING |
+|               650 | 10 |   WAITING |     READY |
+|               650 | 10 |     READY |   RUNNING |
+|               670 | 10 |   RUNNING |   WAITING |
+|               680 | 10 |   WAITING |     READY |
+|               680 | 10 |     READY |   RUNNING |
+|               700 | 10 |   RUNNING |TERMINATED |
++------------------------------------------------+
+
++-------------SIMULATION METRICS--------------+
+|Throughput: 0.0057 processes completed/ms
+|Average Wait Time: 275.0000 ms
+|Average Turnaround Time: 465.00 ms
+|Average Response Time: 105.00 ms
++---------------------------------------------+
