@@ -1,0 +1,77 @@
++------------------------------------------------+
+|Time of Transition |PID | Old State | New State |
++------------------------------------------------+
+|                 0 | 10 |       NEW |     READY |
+|                 0 | 20 |       NEW |     READY |
+|                 0 | 10 |     READY |   RUNNING |
+|                20 | 10 |   RUNNING |   WAITING |
+|                20 | 20 |     READY |   RUNNING |
+|                30 | 10 |   WAITING |     READY |
+|                30 | 20 |   RUNNING |     READY |
+|                30 | 10 |     READY |   RUNNING |
+|                50 | 10 |   RUNNING |   WAITING |
+|                50 | 30 |       NEW |     READY |
+|                50 | 20 |     READY |   RUNNING |
+|                60 | 10 |   WAITING |     READY |
+|                60 | 20 |   RUNNING |     READY |
+|                60 | 10 |     READY |   RUNNING |
+|                80 | 10 |   RUNNING |   WAITING |
+|                80 | 20 |     READY |   RUNNING |
+|                90 | 10 |   WAITING |     READY |
+|                90 | 20 |   RUNNING |     READY |
+|                90 | 10 |     READY |   RUNNING |
+|               100 | 40 |       NEW |     READY |
+|               110 | 10 |   RUNNING |   WAITING |
+|               110 | 20 |     READY |   RUNNING |
+|               120 | 10 |   WAITING |     READY |
+|               120 | 20 |   RUNNING |     READY |
+|               120 | 10 |     READY |   RUNNING |
+|               140 | 10 |   RUNNING |   WAITING |
+|               140 | 20 |     READY |   RUNNING |
+|               150 | 10 |   WAITING |     READY |
+|               150 | 20 |   RUNNING |     READY |
+|               150 | 10 |     READY |   RUNNING |
+|               170 | 10 |   RUNNING |   WAITING |
+|               170 | 20 |     READY |   RUNNING |
+|               180 | 10 |   WAITING |     READY |
+|               180 | 20 |   RUNNING |     READY |
+|               180 | 10 |     READY |   RUNNING |
+|               200 | 10 |   RUNNING |   WAITING |
+|               200 | 20 |     READY |   RUNNING |
+|               210 | 10 |   WAITING |     READY |
+|               210 | 20 |   RUNNING |     READY |
+|               210 | 10 |     READY |   RUNNING |
+|               230 | 10 |   RUNNING |   WAITING |
+|               230 | 20 |     READY |   RUNNING |
+|               240 | 10 |   WAITING |     READY |
+|               240 | 20 |   RUNNING |     READY |
+|               240 | 10 |     READY |   RUNNING |
+|               260 | 10 |   RUNNING |   WAITING |
+|               260 | 20 |     READY |   RUNNING |
+|               270 | 10 |   WAITING |     READY |
+|               270 | 20 |   RUNNING |     READY |
+|               270 | 10 |     READY |   RUNNING |
+|               290 | 10 |   RUNNING |TERMINATED |
+|               290 | 20 |     READY |   RUNNING |
+|               390 | 20 |   RUNNING |     READY |
+|               390 | 20 |     READY |   RUNNING |
+|               490 | 20 |   RUNNING |     READY |
+|               490 | 20 |     READY |   RUNNING |
+|               500 | 20 |   RUNNING |TERMINATED |
+|               500 | 30 |     READY |   RUNNING |
+|               550 | 30 |   RUNNING |   WAITING |
+|               550 | 40 |     READY |   RUNNING |
+|               570 | 30 |   WAITING |     READY |
+|               570 | 40 |   RUNNING |     READY |
+|               570 | 30 |     READY |   RUNNING |
+|               620 | 30 |   RUNNING |TERMINATED |
+|               620 | 40 |     READY |   RUNNING |
+|               650 | 40 |   RUNNING |TERMINATED |
++------------------------------------------------+
+
++-------------SIMULATION METRICS--------------+
+|Throughput: 0.0062 processes completed/ms
+|Average Wait Time: 287.5000 ms
+|Average Turnaround Time: 477.50 ms
+|Average Response Time: 105.00 ms
++---------------------------------------------+
