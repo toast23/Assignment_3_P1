@@ -1,5 +1,5 @@
 /**
- * @file interrupts.cpp
+ * @file interrupts_101256669_101298080_EP_RR.cpp
  * @author Sasisekhar Govind
  * @author Wenxuan Han 101256669
  * @author Tony Yao 101298080
@@ -59,6 +59,7 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
         ///////////////////////MANAGE WAIT QUEUE/////////////////////////
         //This mainly involves keeping track of how long a process must remain in the ready queue
         for(int i = wait_queue.size() - 1; i >= 0; i--) { // Backwards iteration to allow erasing without index errors
+            wait_queue[i].total_io_time++; // Update metric
             wait_queue[i].io_duration_remaining--; // Decrement remaining I/O duration
 
             if(wait_queue[i].io_duration_remaining == 0) { // Check if I/O is done
@@ -174,8 +175,8 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
             }
             // Process finishes execution
             else if(running.remaining_time == 0) {
-                // Update the running process
-                states old_state = RUNNING;
+                states old_state = RUNNING; // Update the running process
+                running.completion_time = current_time + 1; // Update metric
                 
                 // Update execution status and terminate process (free memory, sync job list, update state)
                 execution_status += print_exec_status(current_time + 1, running.PID, old_state, TERMINATED); 
@@ -192,8 +193,12 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
     
     //Close the output table
     execution_status += print_exec_footer();
+    
+    // Calculate metrics
+    std::string metrics = calculate_metrics(job_list, current_time);
 
-    return std::make_tuple(execution_status);
+    // Append metrics to execution status and return
+    return std::make_tuple(execution_status + metrics);
 }
 
 

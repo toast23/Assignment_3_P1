@@ -327,7 +327,7 @@ void idle_CPU(PCB &running) {
 //--------------------------------------------HELPER FUNCTION FOR METRIC CALCULATIONS--------------------
 std::string calculate_metrics(const std::vector<PCB>& job_list, unsigned int total_time) {
     std::stringstream buffer;
-    
+
     int total_processes = job_list.size();
     double total_turnaround = 0;
     double total_wait = 0;
@@ -368,9 +368,9 @@ std::string calculate_metrics(const std::vector<PCB>& job_list, unsigned int tot
 
     // Print metrics
     buffer << "\n+-------------SIMULATION METRICS--------------+\n";
-    buffer << "|Throughput: " << std::fixed << std::setprecision(6) << throughput << " processes completed/ms\n";
+    buffer << "|Throughput: " << std::fixed << std::setprecision(4) << throughput << " processes completed/ms\n";
     buffer << "|Average Wait Time: " << avg_wait << " ms\n";
-    buffer << "|Average Turnaround Time: " << std::fixed << std::setprecision(3) << avg_turnaround << " ms\n";
+    buffer << "|Average Turnaround Time: " << std::fixed << std::setprecision(2) << avg_turnaround << " ms\n";
     buffer << "|Average Response Time: " << avg_response << " ms\n";
     buffer << "+---------------------------------------------+\n";
 
