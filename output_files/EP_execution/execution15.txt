@@ -2,25 +2,22 @@
 |Time of Transition |PID | Old State | New State |
 +------------------------------------------------+
 |                 0 | 10 |       NEW |     READY |
-|                 0 | 20 |       NEW |     READY |
+|                 0 | 50 |       NEW |     READY |
 |                 0 | 10 |     READY |   RUNNING |
-|                50 | 10 |   RUNNING |   WAITING |
-|                50 | 20 |     READY |   RUNNING |
-|                60 | 10 |   WAITING |     READY |
-|               250 | 20 |   RUNNING |TERMINATED |
-|               250 | 10 |     READY |   RUNNING |
-|               300 | 10 |   RUNNING |   WAITING |
-|               310 | 10 |   WAITING |     READY |
-|               310 | 10 |     READY |   RUNNING |
-|               360 | 10 |   RUNNING |   WAITING |
-|               370 | 10 |   WAITING |     READY |
-|               370 | 10 |     READY |   RUNNING |
-|               420 | 10 |   RUNNING |TERMINATED |
+|                40 | 10 |   RUNNING |   WAITING |
+|                40 | 50 |     READY |   RUNNING |
+|                80 | 10 |   WAITING |     READY |
+|               140 | 50 |   RUNNING |TERMINATED |
+|               140 | 10 |     READY |   RUNNING |
+|               180 | 10 |   RUNNING |   WAITING |
+|               220 | 10 |   WAITING |     READY |
+|               220 | 10 |     READY |   RUNNING |
+|               240 | 10 |   RUNNING |TERMINATED |
 +------------------------------------------------+
 
 +-------------SIMULATION METRICS--------------+
-|Throughput: 0.0048 processes completed/ms
-|Average Wait Time: 120.0000 ms
-|Average Turnaround Time: 335.00 ms
-|Average Response Time: 125.00 ms
+|Throughput: 0.0083 processes completed/ms
+|Average Wait Time: 50.0000 ms
+|Average Turnaround Time: 190.00 ms
+|Average Response Time: 70.00 ms
 +---------------------------------------------+

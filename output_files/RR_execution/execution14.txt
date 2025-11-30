@@ -2,32 +2,20 @@
 |Time of Transition |PID | Old State | New State |
 +------------------------------------------------+
 |                 0 | 10 |       NEW |     READY |
-|                 0 | 20 |       NEW |     READY |
+|                 0 | 50 |       NEW |     READY |
 |                 0 | 10 |     READY |   RUNNING |
 |               100 | 10 |   RUNNING |     READY |
-|               100 | 20 |     READY |   RUNNING |
-|               200 | 20 |   RUNNING |     READY |
-|               200 | 10 |     READY |   RUNNING |
-|               250 | 10 |   RUNNING |   WAITING |
-|               250 | 20 |     READY |   RUNNING |
-|               260 | 10 |   WAITING |     READY |
-|               350 | 20 |   RUNNING |     READY |
-|               350 | 10 |     READY |   RUNNING |
-|               450 | 10 |   RUNNING |     READY |
-|               450 | 20 |     READY |   RUNNING |
-|               550 | 20 |   RUNNING |     READY |
-|               550 | 10 |     READY |   RUNNING |
-|               600 | 10 |   RUNNING |   WAITING |
-|               600 | 20 |     READY |   RUNNING |
-|               610 | 10 |   WAITING |     READY |
-|               700 | 20 |   RUNNING |TERMINATED |
-|               700 | 10 |     READY |   RUNNING |
-|               800 | 10 |   RUNNING |TERMINATED |
+|               100 | 50 |     READY |   RUNNING |
+|               110 | 50 |   RUNNING |TERMINATED |
+|               110 | 10 |     READY |   RUNNING |
+|               210 | 10 |   RUNNING |     READY |
+|               210 | 10 |     READY |   RUNNING |
+|               310 | 10 |   RUNNING |TERMINATED |
 +------------------------------------------------+
 
 +-------------SIMULATION METRICS--------------+
-|Throughput: 0.0025 processes completed/ms
-|Average Wait Time: 340.0000 ms
-|Average Turnaround Time: 750.00 ms
-|Average Response Time: 275.00 ms
+|Throughput: 0.0065 processes completed/ms
+|Average Wait Time: 55.0000 ms
+|Average Turnaround Time: 210.00 ms
+|Average Response Time: 155.00 ms
 +---------------------------------------------+

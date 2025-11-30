@@ -3,19 +3,39 @@
 +------------------------------------------------+
 |                 0 | 10 |       NEW |     READY |
 |                 0 | 10 |     READY |   RUNNING |
-|                10 | 50 |       NEW |     READY |
-|               100 | 10 |   RUNNING |     READY |
-|               100 | 10 |     READY |   RUNNING |
-|               200 | 10 |   RUNNING |TERMINATED |
-|               200 | 50 |     READY |   RUNNING |
-|               300 | 50 |   RUNNING |     READY |
-|               300 | 50 |     READY |   RUNNING |
-|               400 | 50 |   RUNNING |TERMINATED |
+|                10 | 10 |   RUNNING |   WAITING |
+|                90 | 10 |   WAITING |     READY |
+|                90 | 10 |     READY |   RUNNING |
+|               100 | 10 |   RUNNING |   WAITING |
+|               180 | 10 |   WAITING |     READY |
+|               180 | 10 |     READY |   RUNNING |
+|               190 | 10 |   RUNNING |   WAITING |
+|               270 | 10 |   WAITING |     READY |
+|               270 | 10 |     READY |   RUNNING |
+|               280 | 10 |   RUNNING |   WAITING |
+|               360 | 10 |   WAITING |     READY |
+|               360 | 10 |     READY |   RUNNING |
+|               370 | 10 |   RUNNING |   WAITING |
+|               450 | 10 |   WAITING |     READY |
+|               450 | 10 |     READY |   RUNNING |
+|               460 | 10 |   RUNNING |   WAITING |
+|               540 | 10 |   WAITING |     READY |
+|               540 | 10 |     READY |   RUNNING |
+|               550 | 10 |   RUNNING |   WAITING |
+|               630 | 10 |   WAITING |     READY |
+|               630 | 10 |     READY |   RUNNING |
+|               640 | 10 |   RUNNING |   WAITING |
+|               720 | 10 |   WAITING |     READY |
+|               720 | 10 |     READY |   RUNNING |
+|               730 | 10 |   RUNNING |   WAITING |
+|               810 | 10 |   WAITING |     READY |
+|               810 | 10 |     READY |   RUNNING |
+|               820 | 10 |   RUNNING |TERMINATED |
 +------------------------------------------------+
 
 +-------------SIMULATION METRICS--------------+
-|Throughput: 0.0050 processes completed/ms
-|Average Wait Time: 95.0000 ms
-|Average Turnaround Time: 295.00 ms
-|Average Response Time: 200.00 ms
+|Throughput: 0.0012 processes completed/ms
+|Average Wait Time: 0.0000 ms
+|Average Turnaround Time: 820.00 ms
+|Average Response Time: 10.00 ms
 +---------------------------------------------+

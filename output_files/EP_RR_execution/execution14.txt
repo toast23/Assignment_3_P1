@@ -2,36 +2,20 @@
 |Time of Transition |PID | Old State | New State |
 +------------------------------------------------+
 |                 0 | 10 |       NEW |     READY |
-|                 0 | 20 |       NEW |     READY |
+|                 0 | 50 |       NEW |     READY |
 |                 0 | 10 |     READY |   RUNNING |
 |               100 | 10 |   RUNNING |     READY |
 |               100 | 10 |     READY |   RUNNING |
-|               150 | 10 |   RUNNING |   WAITING |
-|               150 | 20 |     READY |   RUNNING |
-|               160 | 10 |   WAITING |     READY |
-|               160 | 20 |   RUNNING |     READY |
-|               160 | 10 |     READY |   RUNNING |
-|               260 | 10 |   RUNNING |     READY |
-|               260 | 10 |     READY |   RUNNING |
-|               310 | 10 |   RUNNING |   WAITING |
-|               310 | 20 |     READY |   RUNNING |
-|               320 | 10 |   WAITING |     READY |
-|               320 | 20 |   RUNNING |     READY |
-|               320 | 10 |     READY |   RUNNING |
-|               420 | 10 |   RUNNING |TERMINATED |
-|               420 | 20 |     READY |   RUNNING |
-|               520 | 20 |   RUNNING |     READY |
-|               520 | 20 |     READY |   RUNNING |
-|               620 | 20 |   RUNNING |     READY |
-|               620 | 20 |     READY |   RUNNING |
-|               720 | 20 |   RUNNING |     READY |
-|               720 | 20 |     READY |   RUNNING |
-|               800 | 20 |   RUNNING |TERMINATED |
+|               200 | 10 |   RUNNING |     READY |
+|               200 | 10 |     READY |   RUNNING |
+|               300 | 10 |   RUNNING |TERMINATED |
+|               300 | 50 |     READY |   RUNNING |
+|               310 | 50 |   RUNNING |TERMINATED |
 +------------------------------------------------+
 
 +-------------SIMULATION METRICS--------------+
-|Throughput: 0.0025 processes completed/ms
-|Average Wait Time: 200.0000 ms
-|Average Turnaround Time: 610.00 ms
-|Average Response Time: 275.00 ms
+|Throughput: 0.0065 processes completed/ms
+|Average Wait Time: 150.0000 ms
+|Average Turnaround Time: 305.00 ms
+|Average Response Time: 155.00 ms
 +---------------------------------------------+
