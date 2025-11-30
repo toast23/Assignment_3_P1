@@ -67,11 +67,11 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
                 wait_queue[i].state = READY;
                 ready_queue.push_back(wait_queue[i]);
                 
-                // update job list and execution status
+                // Update job list and execution status
                 sync_queue(job_list, wait_queue[i]);
                 execution_status += print_exec_status(current_time, wait_queue[i].PID, old_state, READY);
                 
-                // remove from wait queue
+                // Remove from wait queue
                 wait_queue.erase(wait_queue.begin() + i);
             }
         }
@@ -84,7 +84,7 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
             running.state = READY;
             ready_queue.push_back(running); 
             
-            // update job list and execution status
+            // Update job list and execution status
             sync_queue(job_list, running);
             execution_status += print_exec_status(current_time, running.PID, old_state, READY); 
 
@@ -103,7 +103,7 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
             next.state = RUNNING;
             running = next;
             
-            // update job list and execution status
+            // Update job list and execution status
             sync_queue(job_list, running);
             execution_status += print_exec_status(current_time, running.PID, old_state, RUNNING);
 
@@ -127,11 +127,11 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
                 states old_state = RUNNING;
                 running.state = WAITING;
                 
-                // add process to wait queue
+                // Add process to wait queue
                 running.io_duration_remaining = running.io_duration + 1; // +1 because we decrement at the start of the wait queue management
                 wait_queue.push_back(running);
                 
-                // update job list and execution status
+                // Update job list and execution status
                 sync_queue(job_list, running);
                 execution_status += print_exec_status(current_time + 1, running.PID, old_state, WAITING);
                 
@@ -140,10 +140,10 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
             }
             // Process finishes execution
             else if(running.remaining_time == 0) {
-                // update the running process
+                // Update the running process
                 states old_state = RUNNING;
                 
-                // update execution status and terminate process (free memory, sync job list, update state)
+                // Update execution status and terminate process (free memory, sync job list, update state)
                 execution_status += print_exec_status(current_time + 1, running.PID, old_state, TERMINATED); 
                 terminate_process(running, job_list);
 
@@ -153,7 +153,7 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
         }
         /////////////////////////////////////////////////////////////////
 
-        current_time++; // update time
+        current_time++; // Update time
 
     }
     
