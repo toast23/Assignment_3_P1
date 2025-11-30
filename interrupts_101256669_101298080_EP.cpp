@@ -114,7 +114,7 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
                 running.state = WAITING;
                 
                 // add process to wait queue
-                running.io_duration_remaining = running.io_duration + 1; // +1 because we decrement at the start of the wait queue managemen
+                running.io_duration_remaining = running.io_duration + 1; // +1 because we decrement at the start of the wait queue management
                 wait_queue.push_back(running);
                 
                 // update job list and execution status

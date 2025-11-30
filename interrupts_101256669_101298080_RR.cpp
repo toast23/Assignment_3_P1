@@ -8,17 +8,8 @@
 
 #include "interrupts_101256669_101298080.hpp"
 
-const unsigned int TIME_QUANTUM = 100; // Time quantum for Round Robin
 
-void FCFS(std::vector<PCB> &ready_queue) {
-    std::sort( 
-                ready_queue.begin(),
-                ready_queue.end(),
-                []( const PCB &first, const PCB &second ){
-                    return (first.arrival_time > second.arrival_time); 
-                } 
-            );
-}
+const unsigned int TIME_QUANTUM = 100; // Time quantum for Round Robin
 
 std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std::vector<PCB> list_processes) {
 
@@ -30,6 +21,7 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
                                     //to make the code easier :).
 
     unsigned int current_time = 0;
+    unsigned int time_spent_in_quantum = 0; // Track time spent in current quantum
     PCB running;
 
     //Initialize an empty running process
@@ -86,11 +78,79 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
         /////////////////////////////////////////////////////////////////
 
         //////////////////////////SCHEDULER//////////////////////////////
+        if(running.state == RUNNING && time_spent_in_quantum == TIME_QUANTUM) { // Check for Preemption 
+            // Preempt the running process
+            states old_state = RUNNING;
+            running.state = READY;
+            ready_queue.push_back(running); 
+            
+            // update job list and execution status
+            sync_queue(job_list, running);
+            execution_status += print_exec_status(current_time, running.PID, old_state, READY); 
+
+            idle_CPU(running); // Set CPU to idle
+            time_spent_in_quantum = 0; // Reset time quantum timer
+        }
+
+        // Schedule next job (FIFO rule for Round Robin)
+        if(running.state != RUNNING && !ready_queue.empty()) { //Schedule only if CPU is free and there are processes in the ready queue
+            // Get a copy of the first process and remove it from the ready queue
+            PCB next = ready_queue.front();
+            ready_queue.erase(ready_queue.begin()); 
+            
+            // Update the running process
+            states old_state = next.state;
+            next.state = RUNNING;
+            running = next;
+            
+            // update job list and execution status
+            sync_queue(job_list, running);
+            execution_status += print_exec_status(current_time, running.PID, old_state, RUNNING);
+
+            time_spent_in_quantum = 0; // Reset time quantum timer
+        }
 
         /////////////////////////////////////////////////////////////////
-
+        
         //////////////////////////RUNNING////////////////////////////////
+        if(running.state == RUNNING) {
+            running.remaining_time--; // Decrement remaining time
+            time_spent_in_quantum++; // Update quantum timer
 
+            // Check for I/O 
+            if(running.io_freq > 0 && // 1. I/O frequency set
+                running.remaining_time != running.processing_time && // 2. Not first tick
+                (running.processing_time - running.remaining_time) % running.io_freq == 0 && // 3. I/O frequency reached
+                running.remaining_time > 0) { // 4. Process still running
+
+                // Update the running process    
+                states old_state = RUNNING;
+                running.state = WAITING;
+                
+                // add process to wait queue
+                running.io_duration_remaining = running.io_duration + 1; // +1 because we decrement at the start of the wait queue management
+                wait_queue.push_back(running);
+                
+                // update job list and execution status
+                sync_queue(job_list, running);
+                execution_status += print_exec_status(current_time + 1, running.PID, old_state, WAITING);
+                
+                idle_CPU(running); // Set CPU to idle
+                time_spent_in_quantum = 0; // Reset quantum timer
+            }
+            // Process finishes execution
+            else if(running.remaining_time == 0) {
+                // update the running process
+                states old_state = RUNNING;
+                
+                // update execution status and terminate process (free memory, sync job list, update state)
+                execution_status += print_exec_status(current_time + 1, running.PID, old_state, TERMINATED); 
+                terminate_process(running, job_list);
+
+                idle_CPU(running); // Set CPU to idle
+                time_spent_in_quantum = 0; // Reset quantum timer
+            }
+        }
         /////////////////////////////////////////////////////////////////
 
         current_time++; // update time
