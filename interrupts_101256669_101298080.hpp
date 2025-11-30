@@ -66,6 +66,10 @@ struct PCB{
     unsigned int    io_freq;
     unsigned int    io_duration;
     unsigned int    io_duration_remaining;
+
+    // Metrics 
+    unsigned int completion_time;
+    unsigned int total_io_time;
 };
 
 //------------------------------------HELPER FUNCTIONS FOR THE SIMULATOR------------------------------
@@ -271,6 +275,10 @@ PCB add_process(std::vector<std::string> tokens) {
     process.partition_number = -1;
     process.state = NOT_ASSIGNED;
 
+    // Metrics 
+    process.completion_time = 0;
+    process.total_io_time = 0;
+
     return process;
 }
 
@@ -314,6 +322,59 @@ void idle_CPU(PCB &running) {
     running.size = 0;
     running.state = NOT_ASSIGNED;
     running.PID = -1;
+}
+
+//--------------------------------------------HELPER FUNCTION FOR METRIC CALCULATIONS--------------------
+std::string calculate_metrics(const std::vector<PCB>& job_list, unsigned int total_time) {
+    std::stringstream buffer;
+    
+    int total_processes = job_list.size();
+    double total_turnaround = 0;
+    double total_wait = 0;
+    double total_response = 0;
+    double avg_turnaround;
+    double avg_wait;
+    double avg_response;
+    double throughput;
+
+    for(auto &process : job_list) {
+        // Calculate TAT and total TAT
+        double turnaround = process.completion_time - process.arrival_time;
+        total_turnaround += turnaround;
+
+        // Calculate wait time
+        double wait = turnaround - process.processing_time - process.total_io_time;
+        if (wait > 0) {
+            total_wait += wait;
+        } 
+
+        // Calculate response time (using assignment definition not textbook definition)
+        if (process.io_freq > 0) { // Time between 2 I/O operations
+            total_response += process.io_freq;
+        } else { // Time becomes entire CPU burst
+            total_response += process.processing_time;
+        }
+    }
+
+    // Calculate averages
+    if (total_time > 0) { // Prevent division by zero
+        throughput = (double)total_processes / total_time;
+    }
+    if (total_processes > 0) { // Prevent division by zero
+        avg_wait = total_wait / total_processes;
+        avg_turnaround = total_turnaround / total_processes;
+        avg_response = total_response / total_processes;
+    }
+
+    // Print metrics
+    buffer << "\n+-------------SIMULATION METRICS--------------+\n";
+    buffer << "|Throughput: " << std::fixed << std::setprecision(6) << throughput << " processes completed/ms\n";
+    buffer << "|Average Wait Time: " << avg_wait << " ms\n";
+    buffer << "|Average Turnaround Time: " << std::fixed << std::setprecision(3) << avg_turnaround << " ms\n";
+    buffer << "|Average Response Time: " << avg_response << " ms\n";
+    buffer << "+---------------------------------------------+\n";
+
+    return buffer.str();
 }
 
 #endif
