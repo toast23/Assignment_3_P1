@@ -1,0 +1,41 @@
++------------------------------------------------+
+|Time of Transition |PID | Old State | New State |
++------------------------------------------------+
+|                 0 | 10 |       NEW |     READY |
+|                 0 | 20 |       NEW |     READY |
+|                 0 | 10 |     READY |   RUNNING |
+|                20 | 10 |   RUNNING |   WAITING |
+|                20 | 20 |     READY |   RUNNING |
+|                40 | 20 |   RUNNING |   WAITING |
+|                40 | 10 |   WAITING |     READY |
+|                40 | 10 |     READY |   RUNNING |
+|                60 | 10 |   RUNNING |   WAITING |
+|                60 | 20 |   WAITING |     READY |
+|                60 | 20 |     READY |   RUNNING |
+|                80 | 20 |   RUNNING |   WAITING |
+|                80 | 10 |   WAITING |     READY |
+|                80 | 10 |     READY |   RUNNING |
+|               100 | 10 |   RUNNING |   WAITING |
+|               100 | 20 |   WAITING |     READY |
+|               100 | 20 |     READY |   RUNNING |
+|               120 | 20 |   RUNNING |   WAITING |
+|               120 | 10 |   WAITING |     READY |
+|               120 | 10 |     READY |   RUNNING |
+|               140 | 10 |   RUNNING |   WAITING |
+|               140 | 20 |   WAITING |     READY |
+|               140 | 20 |     READY |   RUNNING |
+|               160 | 20 |   RUNNING |   WAITING |
+|               160 | 10 |   WAITING |     READY |
+|               160 | 10 |     READY |   RUNNING |
+|               180 | 10 |   RUNNING |TERMINATED |
+|               180 | 20 |   WAITING |     READY |
+|               180 | 20 |     READY |   RUNNING |
+|               200 | 20 |   RUNNING |TERMINATED |
++------------------------------------------------+
+
++-------------SIMULATION METRICS--------------+
+|Throughput: 0.0100 processes completed/ms
+|Average Wait Time: 10.0000 ms
+|Average Turnaround Time: 190.00 ms
+|Average Response Time: 20.00 ms
++---------------------------------------------+

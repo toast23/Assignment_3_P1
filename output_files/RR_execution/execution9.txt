@@ -1,0 +1,21 @@
++------------------------------------------------+
+|Time of Transition |PID | Old State | New State |
++------------------------------------------------+
+|                 0 | 10 |       NEW |     READY |
+|                 0 | 10 |     READY |   RUNNING |
+|               100 | 20 |       NEW |     READY |
+|               100 | 10 |   RUNNING |     READY |
+|               100 | 20 |     READY |   RUNNING |
+|               200 | 20 |   RUNNING |     READY |
+|               200 | 10 |     READY |   RUNNING |
+|               300 | 10 |   RUNNING |TERMINATED |
+|               300 | 20 |     READY |   RUNNING |
+|               400 | 20 |   RUNNING |TERMINATED |
++------------------------------------------------+
+
++-------------SIMULATION METRICS--------------+
+|Throughput: 0.0050 processes completed/ms
+|Average Wait Time: 100.0000 ms
+|Average Turnaround Time: 300.00 ms
+|Average Response Time: 200.00 ms
++---------------------------------------------+
