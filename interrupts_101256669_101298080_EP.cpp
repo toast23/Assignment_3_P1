@@ -8,15 +8,6 @@
 
 #include "interrupts_101256669_101298080.hpp"
 
-void FCFS(std::vector<PCB> &ready_queue) { // Not used in this algorithm
-    std::sort( 
-        ready_queue.begin(),
-        ready_queue.end(),
-        []( const PCB &first, const PCB &second ){
-            return (first.arrival_time > second.arrival_time); 
-        } 
-    );
-}
 
 std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std::vector<PCB> list_processes) {
 
