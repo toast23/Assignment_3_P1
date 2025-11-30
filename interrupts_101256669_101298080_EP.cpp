@@ -76,7 +76,7 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
 
         //////////////////////////SCHEDULER//////////////////////////////
         if(running.state != RUNNING && !ready_queue.empty()) { //Schedule only if CPU is free and there are processes in the ready queue
-            // Find the index of the process with the smallest PID
+            // Find the index of the process with the smallest PID in ready queue
             int smallest_PID_index = 0;
             for (int i = 1; i < ready_queue.size(); i++) {
                 if (ready_queue[i].PID < ready_queue[smallest_PID_index].PID) {

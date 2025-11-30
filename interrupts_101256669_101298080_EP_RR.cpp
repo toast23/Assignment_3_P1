@@ -75,15 +75,75 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
                 wait_queue.erase(wait_queue.begin() + i);
             }
         }
-
         /////////////////////////////////////////////////////////////////
 
         //////////////////////////SCHEDULER//////////////////////////////
+        // Preemption Check 1: External Priority
+        if (running.state == RUNNING && !ready_queue.empty()) { // Can only preempt if there's a running process and ready queue is not empty
+            // Find the index of the process with the smallest PID in ready queue (highest priority)
+            int smallest_PID_index = 0;
+            for (int i = 1; i < ready_queue.size(); i++) {
+                if (ready_queue[i].PID < ready_queue[smallest_PID_index].PID) {
+                    smallest_PID_index = i;
+                }
+            }
 
+            if (running.PID > ready_queue[smallest_PID_index].PID) { // Check if the running job has a lower priority (higher PID)
+                // Preempt the running process
+                states old_state = running.state;
+                running.state = READY;
+                ready_queue.push_back(running); 
 
+                // Update job list and execution status
+                sync_queue(job_list, running);
+                execution_status += print_exec_status(current_time, running.PID, old_state, READY); 
+                
+                idle_CPU(running); // Set CPU to idle
+                time_spent_in_quantum = 0; // Reset quantum timer
+            }
+        }
+    
+        // Preemption Check 2: Time Quantum
+        if(running.state == RUNNING && time_spent_in_quantum == TIME_QUANTUM) { // Check for Time Quantum expiration
+            // Preempt the running process
+            states old_state = running.state;
+            running.state = READY;
+            ready_queue.push_back(running); 
+            
+            // Update job list and execution status
+            sync_queue(job_list, running);
+            execution_status += print_exec_status(current_time, running.PID, old_state, READY); 
+            
+            idle_CPU(running); // Set CPU to idle
+            time_spent_in_quantum = 0; // Reset quantum timer
+        }
 
+        // After preemption checks, scheduler sends dispatcher to perform context switch if CPU is idle (EP + RR)
+        if(running.state != RUNNING && !ready_queue.empty()) { 
+            // Find the index of the process with the smallest PID in ready queue
+            int smallest_PID_index = 0;
+            for (int i = 1; i < ready_queue.size(); i++) {
+                if (ready_queue[i].PID < ready_queue[smallest_PID_index].PID) {
+                    smallest_PID_index = i;
+                }
+            }
 
-        
+            // Get a copy of the process and remove it from the ready queue
+            PCB next = ready_queue[smallest_PID_index];
+            ready_queue.erase(ready_queue.begin() + smallest_PID_index);
+
+            // Update the running process
+            states old_state = next.state;
+            next.state = RUNNING;
+            running = next;
+            
+            // Update job list and execution status
+            sync_queue(job_list, running);
+            execution_status += print_exec_status(current_time, running.PID, old_state, RUNNING);
+
+            time_spent_in_quantum = 0; // Reset time quantum timer
+        }
+     
         /////////////////////////////////////////////////////////////////
 
         //////////////////////////RUNNING////////////////////////////////
