@@ -56,7 +56,6 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
         ///////////////////////MANAGE WAIT QUEUE/////////////////////////
         //This mainly involves keeping track of how long a process must remain in the ready queue
         for(int i = wait_queue.size() - 1; i >= 0; i--) { // Backwards iteration to allow erasing without index errors
-            wait_queue[i].total_io_time++; // Update metric
             wait_queue[i].io_duration_remaining--; // Decrement remaining I/O duration
 
             if(wait_queue[i].io_duration_remaining == 0) { // Check if I/O is done
@@ -71,6 +70,9 @@ std::tuple<std::string /* add std::string for bonus mark */ > run_simulation(std
                 
                 // Remove from wait queue
                 wait_queue.erase(wait_queue.begin() + i);
+            }
+            else { // only update metric if still in I/O
+                wait_queue[i].total_io_time++; 
             }
         }
         /////////////////////////////////////////////////////////////////
